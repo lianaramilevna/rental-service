@@ -32,6 +32,30 @@ export async function getFullOffer(req, res, next) {
   }
 }
 
+export const getFavoriteOffers = async (req, res, next) => {
+  try {
+    const favorites = await Offer.findAll({ where: { isFavorite: true } });
+    res.json(favorites);
+  } catch (err) {
+    next(ApiError.internal('Ошибка при получении избранного'));
+  }
+};
+
+export const toggleFavorite = async (req, res, next) => {
+  try {
+    const { offerId, status } = req.params;
+    const offer = await Offer.findByPk(offerId);
+    if (!offer) {
+      return next(ApiError.notFound('Предложение не найдено'));
+    }
+    offer.isFavorite = status === '1';
+    await offer.save();
+    res.json(offer);
+  } catch (err) {
+    next(ApiError.internal('Ошибка при обновлении статуса избранного'));
+  }
+};
+
 export async function createOffer(req, res, next) {
  try {
    const {
