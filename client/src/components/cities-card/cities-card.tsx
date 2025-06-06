@@ -31,7 +31,7 @@ const [, setActiveOfferId] = useState<string>('');
         <Link to={`${AppRoute.Offer.replace(':id', id)}`}>
           <img
             className="place-card__image"
-            src={`img/${previewImage}`}
+            src={`/img/${previewImage}`}
             width="260"
             height="200"
             alt="Place image"

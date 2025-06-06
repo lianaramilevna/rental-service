@@ -98,9 +98,9 @@ export const offers: FullOffer[] = [
     ],
     city: {
       name: 'Amsterdam',
-      location: { latitude: 52.3702, longitude: 4.8952, zoom: 13 }
+      location: { latitude: 52.38333, longitude: 4.9, zoom: 13 }
     },
-    location: { latitude: 52.3702, longitude: 4.8952, zoom: 16 },
+    location: { latitude: 52.3909553943508, longitude: 4.85309666406198, zoom: 16 },
     goods: ['Air conditioning', 'Towels', 'Breakfast'],
     host: { name: 'Sophie', avatarUrl: 'avatar-sophie.jpg', isPro: true },
     isPremium: false,
@@ -108,5 +108,86 @@ export const offers: FullOffer[] = [
     rating: 4.6,
     bedrooms: 1,
     maxAdult: 2
+  },
+  {
+    id: '8',
+    title: 'Просторный дом на окраине Амстердама',
+    description: 'Большой дом с садом и камином, идеален для семейного отдыха.',
+    type: 'house',
+    price: 350,
+    images: [
+      '8.1.jpg',
+      '8.2.jpg',
+      '672982292.jpg',
+      '672982293.jpg',
+      '672982300.jpg',
+      '672982302.jpg'
+    ],
+    city: {
+      name: 'Amsterdam',
+      location: { latitude: 52.38333, longitude: 4.9, zoom: 13 }
+    },
+    location: { latitude: 52.3609553943508, longitude: 4.85309666406198, zoom: 16 },
+    goods: ['Air conditioning', 'Towels', 'Washer'],
+    host: { name: 'Sophie', avatarUrl: 'avatar-sophie.jpg', isPro: true },
+    isPremium: true,
+    isFavorite: false,
+    rating: 4.8,
+    bedrooms: 4,
+    maxAdult: 8
+  },
+  {
+    id: '7-2',
+    title: 'Квартира-студия у каналов Амстердама-2',
+    description: 'Маленькая, но стильная студия прямо на берегу канала. Идеальна для романтического уик-энда.',
+    type: 'apartment',
+    price: 180,
+    images: [
+      '7.1.jpg',
+      '7.2.jpg',
+      '672982292.jpg',
+      '672982293.jpg',
+      '672982300.jpg',
+      '672982302.jpg'
+    ],
+    city: {
+      name: 'Amsterdam',
+      location: { latitude: 52.38333, longitude: 4.9, zoom: 13 }
+    },
+    location: { latitude: 52.3909553943508, longitude: 4.929309666406198, zoom: 16 },
+    goods: ['Air conditioning', 'Towels', 'Breakfast'],
+    host: { name: 'Sophie', avatarUrl: 'avatar-sophie.jpg', isPro: true },
+    isPremium: false,
+    isFavorite: true,
+    rating: 4.6,
+    bedrooms: 1,
+    maxAdult: 2
+  },
+  {
+    id: '8-2',
+    title: 'Просторный дом на окраине Амстердама',
+    description: 'Большой дом с садом и камином, идеален для семейного отдыха.',
+    type: 'house',
+    price: 350,
+    images: [
+      '8.1.jpg',
+      '8.2.jpg',
+      '672982292.jpg',
+      '672982293.jpg',
+      '672982300.jpg',
+      '672982302.jpg'
+    ],
+    city: {
+      name: 'Amsterdam',
+      location: { latitude: 52.38333, longitude: 4.9, zoom: 13 }
+    },
+    location: { latitude: 52.378998, longitude: 4.928425, zoom: 16 },
+    goods: ['Air conditioning', 'Towels', 'Washer'],
+    host: { name: 'Sophie', avatarUrl: 'avatar-sophie.jpg', isPro: true },
+    isPremium: true,
+    isFavorite: false,
+    rating: 4.8,
+    bedrooms: 4,
+    maxAdult: 8
   }
 ];

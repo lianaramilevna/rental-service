@@ -4,6 +4,7 @@ import { Logo } from '../../components/logo/logo';
 import { offersList } from '../../mocks/offers-list';
 import { OffersList } from '../../types/offer';
 import { Helmet } from 'react-helmet';
+import { Map } from '../../components/map/map';
 
 type MainPageProps = {
   rentalOffersCount: number;
@@ -14,6 +15,12 @@ export function MainPage({
   rentalOffersCount,
   offersList
 }: MainPageProps): JSX.Element {
+  const amsterdamOffers = offersList.filter((o) => o.city.name === 'Amsterdam');
+
+  const mapCenter: [number, number] = [52.38333, 4.9];
+
+  const points = amsterdamOffers.map((o) => o.location);
+
   return (
     <div className="page page--gray page--main">
       <Helmet><title>Шесть городов</title></Helmet>
@@ -86,7 +93,7 @@ export function MainPage({
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">
-                {rentalOffersCount} places to stay in {offersList[0]?.city.name}
+                {rentalOffersCount} places to stay in Amsterdam
               </b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
@@ -106,7 +113,10 @@ export function MainPage({
               <CitiesCardList offersList={offersList} />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <section className="cities__map map" style={{ height: '100%', width: '100%' }}>
+                <Map points={points} center={mapCenter} zoom={12} />
+              </section>
+              
             </div>
           </div>
         </div>

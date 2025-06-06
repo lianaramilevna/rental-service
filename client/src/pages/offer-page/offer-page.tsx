@@ -1,23 +1,45 @@
 import React, { JSX } from 'react';
-import { FullOffer } from '../../types/offer';
+import { useParams } from 'react-router-dom';
+import { FullOffer, OffersList } from '../../types/offer';
 import { Logo } from '../../components/logo/logo';
 import { NotFoundPage } from '../not-found-page/not-found-page';
-import { useParams } from 'react-router-dom';
 import { CommentForm } from '../../components/comment-form/comment-form';
+import { ReviewList } from '../../components/review-list/review-list';
+import { reviews } from '../../mocks/reviews';
+import { Map } from '../../components/map/map';
+import { offersList } from '../../mocks/offers-list';
+import { CitiesCardList } from '../../components/cities-card-list/cities-card-list';
 
 type OfferPageProps = {
   offers: FullOffer[];
 };
 
-function OfferPage({ offers }: OfferPageProps): JSX.Element {
-  const params = useParams<{ id: string }>();
-  const offer = offers.find((item) => item.id === params.id);
+export function OfferPage({ offers }: OfferPageProps): JSX.Element {
+  const params = useParams<{ id?: string }>();
+  const id = params.id || '';
+  const offer = offers.find((item) => item.id === id);
 
   if (!offer) {
     return <NotFoundPage />;
   }
 
-  
+  const nearby: OffersList[] = offersList
+    .filter((item) => item.city.name === 'Amsterdam' && item.id !== id)
+    .slice(0, 3);
+
+  const mapPoints: { latitude: number; longitude: number }[] = [
+    { latitude: offer.location.latitude, longitude: offer.location.longitude },
+    ...nearby.map((item) => ({
+      latitude: item.location.latitude,
+      longitude: item.location.longitude,
+    })),
+  ];
+
+  const mapCenter: [number, number] = [
+    offer.location.latitude,
+    offer.location.longitude,
+  ];
+
   return (
     <div className="page">
       <header className="header">
@@ -29,9 +51,14 @@ function OfferPage({ offers }: OfferPageProps): JSX.Element {
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
-                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                    <span className="header__user-name user__name">Myemail@gmail.com</span>
+                  <a
+                    className="header__nav-link header__nav-link--profile"
+                    href="#"
+                  >
+                    <div className="header__avatar-wrapper user__avatar-wrapper" />
+                    <span className="header__user-name user__name">
+                      Myemail@gmail.com
+                    </span>
                     <span className="header__favorite-count">3</span>
                   </a>
                 </li>
@@ -52,7 +79,11 @@ function OfferPage({ offers }: OfferPageProps): JSX.Element {
             <div className="offer__gallery">
               {offer.images.map((imgUrl) => (
                 <div key={imgUrl} className="offer__image-wrapper">
-                  <img className="offer__image" src={`/img/${imgUrl}`} alt="Place photo" />
+                  <img
+                    className="offer__image"
+                    src={`/img/${imgUrl}`}
+                    alt="Place photo"
+                  />
                 </div>
               ))}
             </div>
@@ -80,16 +111,24 @@ function OfferPage({ offers }: OfferPageProps): JSX.Element {
 
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{ width: `${(offer.rating / 5) * 100}%` }}></span>
+                  <span style={{ width: `${(offer.rating / 5) * 100}%` }} />
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="offer__rating-value rating__value">{offer.rating}</span>
+                <span className="offer__rating-value rating__value">
+                  {offer.rating}
+                </span>
               </div>
 
               <ul className="offer__features">
-                <li className="offer__feature offer__feature--entire">{offer.type}</li>
-                <li className="offer__feature offer__feature--bedrooms">{offer.bedrooms} Bedrooms</li>
-                <li className="offer__feature offer__feature--adults">Max {offer.maxAdult} adults</li>
+                <li className="offer__feature offer__feature--entire">
+                  {offer.type}
+                </li>
+                <li className="offer__feature offer__feature--bedrooms">
+                  {offer.bedrooms} Bedrooms
+                </li>
+                <li className="offer__feature offer__feature--adults">
+                  Max {offer.maxAdult} adults
+                </li>
               </ul>
 
               <div className="offer__price">
@@ -131,57 +170,34 @@ function OfferPage({ offers }: OfferPageProps): JSX.Element {
                     />
                   </div>
                   <span className="offer__user-name">{offer.host.name}</span>
-                  {offer.host.isPro && <span className="offer__user-status">Pro</span>}
+                  {offer.host.isPro && (
+                    <span className="offer__user-status">Pro</span>
+                  )}
                 </div>
+
+                <ReviewList reviews={reviews} />
+                <CommentForm
+                  onSubmit={(comment, rating) => {
+                    console.log('Новый комментарий:', { comment, rating });
+                  }}
+                />
               </section>
             </div>
-            <section className="offer__reviews reviews">
-            <h2 className="reviews__title">
-              Reviews &middot; <span className="reviews__amount">1</span>
-            </h2>
+            <section className="offer__map map" style={{ height: '300px', width: '100%' }}>
+              <Map points={mapPoints} center={mapCenter} zoom={13} />
+            </section>
+          </div>
 
-            <ul className="reviews__list">
-              <li className="reviews__item">
-                <div className="reviews__user user">
-                  <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                    <img
-                      className="reviews__avatar user__avatar"
-                      src="/img/avatar-max.jpg"
-                      width="54"
-                      height="54"
-                      alt="Reviews avatar"
-                    />
-                  </div>
-                  <span className="reviews__user-name">Max</span>
-                </div>
-                <div className="reviews__info">
-                  <div className="reviews__rating rating">
-                    <div className="reviews__stars rating__stars">
-                      <span style={{ width: '80%' }}></span>
-                      <span className="visually-hidden">Rating</span>
-                    </div>
-                  </div>
-                  <p className="reviews__text">
-                    A quiet cozy and picturesque that hides behind a river by the unique lightness of Amsterdam.
-                  </p>
-                  <time className="reviews__time" dateTime="2019-04-24">
-                    April 2019
-                  </time>
-                </div>
-              </li>
-            </ul>
-
-            <CommentForm
-              onSubmit={(comment, rating) => {
-                console.log('Новый комментарий:', { comment, rating });
-              }}
-            />
-          </section>
+          <div className="container">
+            <section className="near-places places">
+              <h2 className="near-places__title"> Other places in the neighbourhood</h2>
+              <div className="near-places__list places__list">
+                <CitiesCardList offersList={nearby} />
+              </div>
+            </section>
           </div>
         </section>
       </main>
     </div>
   );
 }
-
-export { OfferPage };
