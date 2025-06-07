@@ -141,7 +141,7 @@ export const offers: FullOffer[] = [
     title: 'Квартира-студия у каналов Амстердама-2',
     description: 'Маленькая, но стильная студия прямо на берегу канала. Идеальна для романтического уик-энда.',
     type: 'apartment',
-    price: 180,
+    price: 150,
     images: [
       '7.1.jpg',
       '7.2.jpg',
@@ -158,8 +158,8 @@ export const offers: FullOffer[] = [
     goods: ['Air conditioning', 'Towels', 'Breakfast'],
     host: { name: 'Sophie', avatarUrl: 'avatar-sophie.jpg', isPro: true },
     isPremium: false,
-    isFavorite: true,
-    rating: 4.6,
+    isFavorite: false,
+    rating: 4.2,
     bedrooms: 1,
     maxAdult: 2
   },
@@ -168,7 +168,7 @@ export const offers: FullOffer[] = [
     title: 'Просторный дом на окраине Амстердама',
     description: 'Большой дом с садом и камином, идеален для семейного отдыха.',
     type: 'house',
-    price: 350,
+    price: 320,
     images: [
       '8.1.jpg',
       '8.2.jpg',
@@ -185,8 +185,8 @@ export const offers: FullOffer[] = [
     goods: ['Air conditioning', 'Towels', 'Washer'],
     host: { name: 'Sophie', avatarUrl: 'avatar-sophie.jpg', isPro: true },
     isPremium: true,
-    isFavorite: false,
-    rating: 4.8,
+    isFavorite: true,
+    rating: 4.7,
     bedrooms: 4,
     maxAdult: 8
   }

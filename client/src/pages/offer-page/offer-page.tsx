@@ -7,37 +7,33 @@ import { CommentForm } from '../../components/comment-form/comment-form';
 import { ReviewList } from '../../components/review-list/review-list';
 import { reviews } from '../../mocks/reviews';
 import { Map } from '../../components/map/map';
-import { offersList } from '../../mocks/offers-list';
+import { offersList as allOffersList } from '../../mocks/offers-list';
 import { CitiesCardList } from '../../components/cities-card-list/cities-card-list';
+import { useAppSelector } from '../../hooks';
 
-type OfferPageProps = {
-  offers: FullOffer[];
-};
+export function OfferPage(): JSX.Element {
+  const { id = '' } = useParams<{ id?: string }>();
+  const fullOffers = useAppSelector((s) => s.fullOffers);
 
-export function OfferPage({ offers }: OfferPageProps): JSX.Element {
-  const params = useParams<{ id?: string }>();
-  const id = params.id || '';
-  const offer = offers.find((item) => item.id === id);
-
+  const offer = fullOffers.find((o) => o.id === id);
   if (!offer) {
     return <NotFoundPage />;
   }
 
-  const nearby: OffersList[] = offersList
-    .filter((item) => item.city.name === 'Amsterdam' && item.id !== id)
+  const nearby = allOffersList
+    .filter((o) => o.city.name === 'Amsterdam' && o.id !== id)
     .slice(0, 3);
 
-  const mapPoints: { latitude: number; longitude: number }[] = [
+  const mapPoints = [
     { latitude: offer.location.latitude, longitude: offer.location.longitude },
-    ...nearby.map((item) => ({
-      latitude: item.location.latitude,
-      longitude: item.location.longitude,
-    })),
+    ...nearby.map((o) => ({
+      latitude: o.location.latitude,
+      longitude: o.location.longitude
+    }))
   ];
-
   const mapCenter: [number, number] = [
     offer.location.latitude,
-    offer.location.longitude,
+    offer.location.longitude
   ];
 
   return (
@@ -77,11 +73,11 @@ export function OfferPage({ offers }: OfferPageProps): JSX.Element {
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
-              {offer.images.map((imgUrl) => (
-                <div key={imgUrl} className="offer__image-wrapper">
+              {offer.images.map((img) => (
+                <div key={img} className="offer__image-wrapper">
                   <img
                     className="offer__image"
-                    src={`/img/${imgUrl}`}
+                    src={`/img/${img}`}
                     alt="Place photo"
                   />
                 </div>

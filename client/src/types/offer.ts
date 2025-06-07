@@ -57,3 +57,4 @@ export type FavoriteOffer = {
   isPremium: boolean;
   isFavorite: boolean;
 };
+
